@@ -11,6 +11,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Tid for splashscreen on start up
     private static int SPLASH_TIME_OUT = 4000;
 
     @Override

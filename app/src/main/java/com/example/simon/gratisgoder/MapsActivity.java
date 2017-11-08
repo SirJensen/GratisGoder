@@ -30,16 +30,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        final Button ListButton = (Button) findViewById(R.id.list_button);
-
-        ListButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent getListIntent = new Intent(MapsActivity.this, ListActivity.class);
-                MapsActivity.this.startActivity(getListIntent);
-            }
-        });
     }
 
 

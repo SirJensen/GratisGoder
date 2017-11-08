@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mapsActivitiy = new Intent(MainActivity.this, MapsActivity.class);
+                Intent mapsActivitiy = new Intent(MainActivity.this, TabbedActivity.class);
                 startActivity(mapsActivitiy);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();

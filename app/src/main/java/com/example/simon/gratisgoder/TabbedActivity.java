@@ -3,6 +3,7 @@ package com.example.simon.gratisgoder;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -99,19 +100,7 @@ public class TabbedActivity extends AppCompatActivity {
         }
     }
 
-    public static class ListFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.activity_list, container, false);
-            return rootView;
-        }
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -132,7 +121,8 @@ public class TabbedActivity extends AppCompatActivity {
                     MapsFragment tab1 = new MapsFragment();
                     return tab1;
                 case 1:
-                    ListFragment tab2 = new ListFragment();
+                    ListFragment fragment = new ListFragment();
+                    ListFragment tab2 = fragment;
                     return tab2;
                 default:
                     return null;

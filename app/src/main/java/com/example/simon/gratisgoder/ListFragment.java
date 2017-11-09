@@ -1,16 +1,19 @@
 package com.example.simon.gratisgoder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
+import com.example.simon.gratisgoder.HelpClass.Gg;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,6 +63,29 @@ public class ListFragment extends Fragment {
             }
         });
 
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+              String titel =  oplevelser.getOplevelser().get(i).getTitel();
+              String sted = oplevelser.getOplevelser().get(i).getSted();
+              String adresse = oplevelser.getOplevelser().get(i).getAdresse();
+              String img = oplevelser.getOplevelser().get(i).getImage();
+              String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
+
+                Bundle bundle = new Bundle();
+
+                bundle.putString("Titel",titel);
+                bundle.putString("Sted",sted);
+                bundle.putString("Adresse",adresse);
+                bundle.putString("Image",img);
+                bundle.putString("Beskrivelse",beskrivelse);
+                Intent appInfo = new Intent(getActivity(), Gg.class);
+                appInfo.putExtras(bundle);
+                startActivity(appInfo);
+            }
+        });
 
         return rootView;
     }

@@ -1,0 +1,73 @@
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/backBTN"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="@color/colorAccent"
+
+            />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/titelText"
+            android:text="KOM TIL ÅBEN HUS"
+            android:textStyle="bold"
+            android:textSize="26dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+
+            />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/button_style"/>
+        <TextView
+            android:id="@+id/stedText"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="STED : "
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/adresseText"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Adresse : "
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:autoSizeTextType="uniform"
+            />
+
+        <TextView
+            android:id="@+id/beskrivelseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

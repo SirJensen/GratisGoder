@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -122,6 +123,7 @@ public class TabbedActivity extends AppCompatActivity {
                     return tab1;
                 case 1:
                     ListFragment fragment = new ListFragment();
+                    Log.i("JJJ","Laver jeg new");
                     ListFragment tab2 = fragment;
                     return tab2;
                 default:

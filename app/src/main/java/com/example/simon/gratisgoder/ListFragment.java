@@ -13,7 +13,6 @@ import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
-import com.example.simon.gratisgoder.HelpClass.Gg;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,7 +80,7 @@ public class ListFragment extends Fragment {
                 bundle.putString("Adresse",adresse);
                 bundle.putString("Image",img);
                 bundle.putString("Beskrivelse",beskrivelse);
-                Intent appInfo = new Intent(getActivity(), Gg.class);
+                Intent appInfo = new Intent(getActivity(), ListViewActivity.class);
                 appInfo.putExtras(bundle);
                 startActivity(appInfo);
             }

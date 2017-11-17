@@ -79,6 +79,7 @@ public class ListFragment extends Fragment {
               String sted = oplevelser.getOplevelser().get(i).getSted();
               String adresse = oplevelser.getOplevelser().get(i).getAdresse();
               String img = oplevelser.getOplevelser().get(i).getImage();
+                img = img.replace("\\", "/");
               String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
 
                 Bundle bundle = new Bundle();

@@ -50,7 +50,8 @@ image = image.replace("\\", "/");
 
 
         Picasso.with(context).load( image).resize(100,100).into(imageView);
-//Log.i("noob","https://www.gratisgoder.dk/cache\\com_zoo\\images\\Abent_hus_og_sommerfest_921c745d40f66ace8bff02c8841e0cda.jpg");
+
+        extratxt.setText(getItem(position).getSted()); // fix bug
 
 
 

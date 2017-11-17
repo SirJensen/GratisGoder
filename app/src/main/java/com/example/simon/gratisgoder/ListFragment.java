@@ -12,7 +12,10 @@ import android.widget.ListView;
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
+import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

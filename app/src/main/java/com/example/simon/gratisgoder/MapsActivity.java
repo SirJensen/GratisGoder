@@ -54,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
 
-        LatLng address = getLocationFromAddress(this, ("Test Address");
+        LatLng address = getLocationFromAddress(this, ("Test Address"));
 
         mMap.addMarker(new MarkerOptions().position(address).title("Test Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(address));

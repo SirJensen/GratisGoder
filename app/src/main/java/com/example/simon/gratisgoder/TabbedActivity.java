@@ -119,7 +119,7 @@ public class TabbedActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    MapsFragment tab1 = new MapsFragment();
+                    com.example.simon.gratisgoder.MapsFragment tab1 = new  com.example.simon.gratisgoder.MapsFragment();
                     return tab1;
                 case 1:
                     ListFragment fragment = new ListFragment();

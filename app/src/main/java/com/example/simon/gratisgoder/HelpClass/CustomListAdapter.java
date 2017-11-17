@@ -2,6 +2,7 @@ package com.example.simon.gratisgoder.HelpClass;
 
 
         import android.app.Activity;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -40,10 +41,19 @@ public class CustomListAdapter extends ArrayAdapter<Oplevelser> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView extratxt = (TextView) rowView.findViewById(R.id.sted);
 
+String image = getItem(position).getImage();
+image = image.replace("\\", "/");
+
 
         txtTitle.setText(getItem(position).getTitel());
-        Picasso.with(context).load(getItem(position).getImage()).into(imageView);
-        extratxt.setText(getItem(position).getSted());
+
+
+
+        Picasso.with(context).load( image).resize(100,100).into(imageView);
+//Log.i("noob","https://www.gratisgoder.dk/cache\\com_zoo\\images\\Abent_hus_og_sommerfest_921c745d40f66ace8bff02c8841e0cda.jpg");
+
+
+
         return rowView;
 
     };

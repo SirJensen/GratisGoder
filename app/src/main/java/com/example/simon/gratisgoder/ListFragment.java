@@ -32,6 +32,7 @@ public class ListFragment extends Fragment {
     Call<Articles> call;
     Articles oplevelser = new Articles();
     CustomListAdapter myAdapter;
+    List<Oplevelser> alle,nordjyl;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -66,6 +67,10 @@ public class ListFragment extends Fragment {
         });
 
 
+
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,4 +96,7 @@ public class ListFragment extends Fragment {
 
         return rootView;
     }
+
+
+
 }

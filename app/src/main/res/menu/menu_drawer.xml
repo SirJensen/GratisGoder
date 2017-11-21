@@ -5,35 +5,31 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-
-        android:icon="@drawable/googleg_standard_color_18"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/createExp"
 
             android:icon="@drawable/googleg_standard_color_18"
-            android:title="Gallery" />
+            android:title="Tilføj Oplevelse" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/visited"
+
             android:icon="@drawable/googleg_standard_color_18"
-            android:title="Slideshow" />
+            android:title="Oplevelser Besøgt Af Mig" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/myCreatedExp"
             android:icon="@drawable/googleg_standard_color_18"
-            android:title="Tools" />
+            android:title="Oplevelser Tilføjet Af Mig" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/settings"
                 android:icon="@drawable/googleg_standard_color_18"
-                android:title="Share" />
+                android:title="Indstillinger" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/contact"
                 android:icon="@drawable/googleg_standard_color_18"
-                android:title="Send" />
+                android:title="Kontakt" />
         </menu>
     </item>
 

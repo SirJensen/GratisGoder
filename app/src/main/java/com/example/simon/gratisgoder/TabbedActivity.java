@@ -23,7 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
 
 public class TabbedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +39,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ImageView filter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,6 +60,17 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        filter = (ImageView) findViewById(R.id.toolbar_logo);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialogClass cdd=new CustomDialogClass(TabbedActivity.this);
+                cdd.show();
+
+            }
+        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 

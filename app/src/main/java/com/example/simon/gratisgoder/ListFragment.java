@@ -1,20 +1,25 @@
 package com.example.simon.gratisgoder;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
 import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
+import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,18 +37,29 @@ public class ListFragment extends Fragment {
     Call<Articles> call;
     Articles oplevelser = new Articles();
     CustomListAdapter myAdapter;
-    List<Oplevelser> alle,nordjyl;
+    List<Oplevelser> alle,nordjyl,sydSj,born,midtSj,fyn,ostJyl,vestJyl,storKbh,midtJyl;
+
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)  {
 
         final View rootView = inflater.inflate(R.layout.activity_list, container, false);
 
         listView = (ListView)rootView.findViewById(R.id.list);
+
+        nordjyl = new ArrayList<>();
+        sydSj = new ArrayList<>();
+        born = new ArrayList<>();
+        midtSj = new ArrayList<>();
+        fyn = new ArrayList<>();
+        ostJyl = new ArrayList<>();
+        vestJyl = new ArrayList<>();
+        storKbh = new ArrayList<>();
+        midtJyl = new ArrayList<>();
 
         api = Service.createService(MInterface.class);
 
@@ -54,8 +70,50 @@ public class ListFragment extends Fragment {
             public void onResponse(Call<Articles> call, Response<Articles> response) {
                 if(response.isSuccessful()) {
                     oplevelser = response.body();
-                    myAdapter =  new CustomListAdapter(getActivity(),oplevelser.getOplevelser());
-                    listView.setAdapter(myAdapter);
+                    alle = oplevelser.getOplevelser();
+                    //myAdapter =  new CustomListAdapter(getActivity(),oplevelser.getOplevelser());
+                    //listView.setAdapter(myAdapter);
+                    for (Oplevelser alle: alle) {
+                        if (alle.getSted().contains("Nordjylland")) {
+                            nordjyl.add(alle);
+                       }
+                        if (alle.getSted().contains("Sydsjælland")) {
+                            sydSj.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Bornholm")) {
+                            born.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Midtsjælland")) {
+                            midtSj.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Fyn")) {
+                            fyn.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Østjylland")) {
+                            ostJyl.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Vestjyllad")) {
+                            vestJyl.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Storkøbenhavn")) {
+                            storKbh.add(alle);
+                        }
+
+                        if (alle.getSted().contains("Midtjylland")) {
+                            midtJyl.add(alle);
+                        }
+
+
+                    }
+
+                    myAdapter =  new CustomListAdapter(getActivity(),sydSj);
+                   listView.setAdapter(myAdapter);
 
                 }
             }
@@ -65,6 +123,7 @@ public class ListFragment extends Fragment {
 
             }
         });
+
 
 
 

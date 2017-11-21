@@ -66,8 +66,12 @@
             android:name=".TabbedActivity"
             android:label="@string/title_activity_tabbed"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e155ba467a6121a9468ba2914ac317d21a9a3c36"
+            />
 
 
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

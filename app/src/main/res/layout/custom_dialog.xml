@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="80dp"
-    android:background="#3E80B4"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3eb44e"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
 
     <TextView
         android:id="@+id/txt_dia"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Do you realy want to exit ?"
+        android:text="Hvor vil du søge goder ?"
         android:textColor="@android:color/white"
         android:textSize="15dp"
         android:textStyle="bold"/>
@@ -20,30 +21,172 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#3E80B4"
-        android:orientation="horizontal" >
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="10dp"
 
-        <Button
-            android:id="@+id/btn_yes"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:text="Yes"
-            android:textColor="#5DBCD2"
-            android:textStyle="bold" />
+        >
 
-        <Button
-            android:id="@+id/btn_no"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:text="No"
-            android:textColor="#5DBCD2"
-            android:textStyle="bold" />
+        <CheckBox
+            android:id="@+id/nordjyl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="NordJylland"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="20dp"
+            />
+        <CheckBox
+            android:id="@+id/vestjyl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="VestJylland"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="20dp"
+
+            />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="10dp"
+
+        >
+
+        <CheckBox
+            android:id="@+id/midtjyl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="22dp"
+            android:buttonTint="#ffffff"
+            android:text="MidtJylland"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/ostjyl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="ØstJylland"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <CheckBox
+            android:id="@+id/vestsj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="VestSjælland"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/fyn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:buttonTint="#ffffff"
+            android:text="Fyn"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <CheckBox
+            android:id="@+id/nordsj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="NordSjælland"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/sydjyl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="11dp"
+            android:buttonTint="#ffffff"
+            android:text="SydJylland"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <CheckBox
+            android:id="@+id/midtsj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="Midtsjælland"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/kbh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:buttonTint="#ffffff"
+            android:text="København"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+
+        >
+
+        <CheckBox
+            android:id="@+id/sydsj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="Sydsjælland"
+            android:textColor="#ffffff" />
+
+        <CheckBox
+            android:id="@+id/born"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="#ffffff"
+            android:text="Bornholm"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Søg"
+        android:textColor="#000000"
+        />
 
 </LinearLayout>

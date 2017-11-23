@@ -1,8 +1,10 @@
 package com.example.simon.gratisgoder;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,8 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
 
 public class TabbedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +39,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ImageView filter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,6 +61,17 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        filter = (ImageView) findViewById(R.id.toolbar_logo);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialogClass cdd=new CustomDialogClass(TabbedActivity.this);
+                cdd.show();
+
+            }
+        });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -70,16 +86,6 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        View header = navigationView.getHeaderView(0);
-        LinearLayout loginLayout = (LinearLayout) header.findViewById(R.id.loginlayout);
-        loginLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent login = new Intent(TabbedActivity.this, LoginActivity.class);
-                startActivity(login);
-            }
-        });
     }
     @Override
     public void onBackPressed() {
@@ -177,21 +183,21 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+/*
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
 
-        if (id == R.id.createExp) {
-            Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
-            startActivity(createExp);
-        } else if (id == R.id.visited) {
+        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.myCreatedExp) {
+        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.settings) {
+        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.contact) {
+        } else if (id == R.id.nav_send) {
 
         }
-
-
+*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

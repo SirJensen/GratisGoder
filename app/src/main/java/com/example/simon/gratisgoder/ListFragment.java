@@ -32,12 +32,12 @@ import retrofit2.Response;
 
 public class ListFragment extends Fragment {
 
-    ListView listView ;
+    public static ListView listView;
     MInterface api;
     Call<Articles> call;
     Articles oplevelser = new Articles();
-    CustomListAdapter myAdapter;
-    List<Oplevelser> alle,nordjyl,sydSj,born,midtSj,fyn,ostJyl,vestJyl,storKbh,midtJyl;
+    public static CustomListAdapter myAdapter;
+    public static List<Oplevelser> alle, nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl;
 
     /**
      * The fragment argument representing the section number for this
@@ -45,11 +45,11 @@ public class ListFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)  {
+                             Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.activity_list, container, false);
 
-        listView = (ListView)rootView.findViewById(R.id.list);
+        listView = (ListView) rootView.findViewById(R.id.list);
 
         nordjyl = new ArrayList<>();
         sydSj = new ArrayList<>();
@@ -61,6 +61,7 @@ public class ListFragment extends Fragment {
         storKbh = new ArrayList<>();
         midtJyl = new ArrayList<>();
 
+
         api = Service.createService(MInterface.class);
 
         call = api.getOplevelser();
@@ -68,15 +69,15 @@ public class ListFragment extends Fragment {
         call.enqueue(new Callback<Articles>() {
             @Override
             public void onResponse(Call<Articles> call, Response<Articles> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     oplevelser = response.body();
                     alle = oplevelser.getOplevelser();
                     //myAdapter =  new CustomListAdapter(getActivity(),oplevelser.getOplevelser());
                     //listView.setAdapter(myAdapter);
-                    for (Oplevelser alle: alle) {
+                    for (Oplevelser alle : alle) {
                         if (alle.getSted().contains("Nordjylland")) {
                             nordjyl.add(alle);
-                       }
+                        }
                         if (alle.getSted().contains("Sydsjælland")) {
                             sydSj.add(alle);
                         }
@@ -112,8 +113,8 @@ public class ListFragment extends Fragment {
 
                     }
 
-                    myAdapter =  new CustomListAdapter(getActivity(),sydSj);
-                   listView.setAdapter(myAdapter);
+                    myAdapter = new CustomListAdapter(getActivity(), sydSj);
+                    listView.setAdapter(myAdapter);
 
                 }
             }
@@ -125,29 +126,24 @@ public class ListFragment extends Fragment {
         });
 
 
-
-
-
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-              String titel =  oplevelser.getOplevelser().get(i).getTitel();
-              String sted = oplevelser.getOplevelser().get(i).getSted();
-              String adresse = oplevelser.getOplevelser().get(i).getAdresse();
-              String img = oplevelser.getOplevelser().get(i).getImage();
+                String titel = oplevelser.getOplevelser().get(i).getTitel();
+                String sted = oplevelser.getOplevelser().get(i).getSted();
+                String adresse = oplevelser.getOplevelser().get(i).getAdresse();
+                String img = oplevelser.getOplevelser().get(i).getImage();
                 img = img.replace("\\", "/");
-              String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
+                String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("Titel",titel);
-                bundle.putString("Sted",sted);
-                bundle.putString("Adresse",adresse);
-                bundle.putString("Image",img);
-                bundle.putString("Beskrivelse",beskrivelse);
+                bundle.putString("Titel", titel);
+                bundle.putString("Sted", sted);
+                bundle.putString("Adresse", adresse);
+                bundle.putString("Image", img);
+                bundle.putString("Beskrivelse", beskrivelse);
                 Intent appInfo = new Intent(getActivity(), ListViewActivity.class);
                 appInfo.putExtras(bundle);
                 startActivity(appInfo);
@@ -157,6 +153,50 @@ public class ListFragment extends Fragment {
         return rootView;
     }
 
-
+    public static List<Oplevelser> getListe(String sted) {
+List<Oplevelser> filterList = null;
+        switch (sted) {
+            case "NordJylland":
+                if(nordjyl != null)
+                filterList = nordjyl;
+            break;
+            case "Sydsjælland":
+                if(sydSj != null)
+                filterList = sydSj;
+            break;
+            case "Bornholm":
+                if(born != null)
+                filterList = born;
+                break;
+            case "Midtsjælland":
+                if(midtSj != null)
+                filterList = midtSj;
+                break;
+            case "Fyn":
+                if(fyn != null)
+                filterList = fyn;
+                break;
+            case "Østjylland":
+                if(ostJyl != null)
+                filterList = ostJyl;
+                break;
+            case "Vestjyllad":
+                if(vestJyl != null)
+                filterList = vestJyl;
+                break;
+            case "København":
+                if(storKbh != null)
+                filterList = storKbh;
+                break;
+            case "Midtjylland":
+                if(midtJyl != null)
+                filterList = midtJyl;
+                break;
+            default:
+                break;
+        }
+    return filterList ;
+    }
 
 }
+

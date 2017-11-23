@@ -3,18 +3,36 @@ package com.example.simon.gratisgoder.HelpClass;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ListView;
+import android.widget.RadioButton;
 
+import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
+import com.example.simon.gratisgoder.ListFragment;
 import com.example.simon.gratisgoder.R;
+import com.example.simon.gratisgoder.TabbedActivity;
 
-public class CustomDialogClass extends Dialog implements
-        android.view.View.OnClickListener {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class CustomDialogClass extends Dialog {
 
     public Activity c;
     public Dialog d;
-    public Button yes, no;
+    public CheckBox nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl;
+
+    Button sog;
+    ListView test ;
+    List<Oplevelser> h = new ArrayList<>();
+    private boolean flagCheckedNordjyl = false;
+    private boolean flagNoChecked  = false;
 
     public CustomDialogClass(Activity a) {
         super(a);
@@ -22,30 +40,46 @@ public class CustomDialogClass extends Dialog implements
         this.c = a;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
-        yes = (Button) findViewById(R.id.btn_yes);
-        no = (Button) findViewById(R.id.btn_no);
-        yes.setOnClickListener(this);
-        no.setOnClickListener(this);
 
-    }
+        nordjyl = (CheckBox) findViewById(R.id.nordjyl);
+        sydSj  = (CheckBox) findViewById(R.id.sydsj);
+        born = (CheckBox) findViewById(R.id.born);
+        midtSj = (CheckBox) findViewById(R.id.midtsj);
+        fyn = (CheckBox) findViewById(R.id.fyn);
+        ostJyl = (CheckBox) findViewById(R.id.ostjyl);
+        vestJyl = (CheckBox) findViewById(R.id.vestjyl);
+        storKbh = (CheckBox) findViewById(R.id.kbh);
+        midtJyl = (CheckBox) findViewById(R.id.midtjyl);
+        CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl};
+        sog = (Button) findViewById(R.id.sog);
+        sog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_yes:
-                c.finish();
-                break;
-            case R.id.btn_no:
+                for (int i = 0 ; i < checkButtons.length; i++){
+                    if(checkButtons[i].isChecked()){
+                        List<Oplevelser> addToAdapter = ListFragment.getListe(checkButtons[i].getText().toString());
+                        if(addToAdapter!= null)
+                      h.addAll (addToAdapter);
+                    }
+                }
+                    ListFragment.myAdapter.clear();
+                        ListFragment.myAdapter.addAll(h);
+                   ListFragment.myAdapter.notifyDataSetChanged();
                 dismiss();
-                break;
-            default:
-                break;
-        }
-        dismiss();
+
+                }
+
+        });
+
     }
+
+
 }

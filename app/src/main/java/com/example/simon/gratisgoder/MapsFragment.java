@@ -104,7 +104,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                     oplevelser = response.body();
                     adresser = oplevelser.getOplevelser();
 
-                    for (int i = 0; i< 5;i++){
+                    for (int i = 0; i< 3;i++){
                         LatLng address = getLocationFromAddress(adresser.get(i).getAdresse()) ;
                         if(address!=null) {
                            // mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));

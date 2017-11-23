@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GratisGoder</string>
+    <string name="app_name">Gratis Goder</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">Sign in</string>
 
@@ -16,7 +16,7 @@
         completions."
     </string>
     <string name="title_activity_list">ListActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Gratis Goder</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="tab_text_1">Map</string>
     <string name="tab_text_2">List</string>

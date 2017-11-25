@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         REQUEST_ID_ACCESS_COURSE_FINE_LOCATION);
 
                 return;
+
             }
         }
 

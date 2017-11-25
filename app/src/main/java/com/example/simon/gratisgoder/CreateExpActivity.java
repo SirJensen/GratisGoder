@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,19 +17,18 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-public class CreateExpActivity extends AppCompatActivity implements PlaceSelectionListener {
+public class CreateExpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "PlaceSelectionListener";
-    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+   /* private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
-    private TextView locationTextView;
-    private TextView attributionsTextView;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createexp);
-
+        final TextView textView = (TextView) findViewById(R.id.textView7);
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -38,12 +38,12 @@ public class CreateExpActivity extends AppCompatActivity implements PlaceSelecti
                 // TODO: Get info about the selected place.
                 Log.i(LOG_TAG, "Place: " + place.getName());
 
-                String placeDetailsStr = place.getName() + "\n"
-                        + place.getId() + "\n"
-                        + place.getLatLng().toString() + "\n"
-                        + place.getAddress() + "\n"
-                        + place.getAttributions();
-                locationTextView.setText(placeDetailsStr);
+                String placeDetailsStr = place.getName() //"\n"
+                        //+ place.getId() + "\n"
+                        + place.getLatLng().toString()
+                        + place.getAddress();
+                        //+ place.getAttributions();
+                textView.setText(placeDetailsStr);
             }
 
             @Override
@@ -92,13 +92,4 @@ public class CreateExpActivity extends AppCompatActivity implements PlaceSelecti
     }*/
     }
 
-    @Override
-    public void onPlaceSelected(Place place) {
-
-    }
-
-    @Override
-    public void onError(Status status) {
-
-    }
 }

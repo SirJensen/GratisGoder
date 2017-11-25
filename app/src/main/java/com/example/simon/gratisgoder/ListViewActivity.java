@@ -46,9 +46,9 @@ public class ListViewActivity extends AppCompatActivity {
         String img = extras.getString("Image");
         String beskrivelse = extras.getString("Beskrivelse");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        appBar = (AppBarLayout) findViewById(R.id.app_bar);
+        appBar = findViewById(R.id.app_bar);
       //  image = (ImageView) findViewById(R.id.imageView);
 
      //   Picasso.with(this).load(img).into(image);
@@ -80,7 +80,7 @@ public class ListViewActivity extends AppCompatActivity {
 
      //   titelTxt.setText(titel);
 
-        stedTxt = (TextView) findViewById(R.id.stedTxt);
+        stedTxt = findViewById(R.id.stedTxt);
 
         stedTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.place, 0, 0, 0);
 
@@ -90,7 +90,7 @@ public class ListViewActivity extends AppCompatActivity {
 
      //   adresseTxt.setText("Adresse : "+adresse);
 
-        beskivTxt = (TextView) findViewById(R.id.beskrivelseTxt);
+        beskivTxt = findViewById(R.id.beskrivelseTxt);
 
         beskivTxt.setText(beskrivelse);
 

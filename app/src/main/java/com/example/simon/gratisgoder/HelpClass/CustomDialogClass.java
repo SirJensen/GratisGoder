@@ -48,17 +48,17 @@ public class CustomDialogClass extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
 
-        nordjyl = (CheckBox) findViewById(R.id.nordjyl);
-        sydSj  = (CheckBox) findViewById(R.id.sydsj);
-        born = (CheckBox) findViewById(R.id.born);
-        midtSj = (CheckBox) findViewById(R.id.midtsj);
-        fyn = (CheckBox) findViewById(R.id.fyn);
-        ostJyl = (CheckBox) findViewById(R.id.ostjyl);
-        vestJyl = (CheckBox) findViewById(R.id.vestjyl);
-        storKbh = (CheckBox) findViewById(R.id.kbh);
-        midtJyl = (CheckBox) findViewById(R.id.midtjyl);
+        nordjyl = findViewById(R.id.nordjyl);
+        sydSj  = findViewById(R.id.sydsj);
+        born = findViewById(R.id.born);
+        midtSj = findViewById(R.id.midtsj);
+        fyn = findViewById(R.id.fyn);
+        ostJyl = findViewById(R.id.ostjyl);
+        vestJyl = findViewById(R.id.vestjyl);
+        storKbh = findViewById(R.id.kbh);
+        midtJyl = findViewById(R.id.midtjyl);
         final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl};
-        sog = (Button) findViewById(R.id.sog);
+        sog = findViewById(R.id.sog);
         sog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -39,9 +39,9 @@ public class CustomListAdapter extends ArrayAdapter<Oplevelser> {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.mylist, null,true);
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.titel);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        TextView extratxt = (TextView) rowView.findViewById(R.id.sted);
+        TextView txtTitle = rowView.findViewById(R.id.titel);
+        ImageView imageView = rowView.findViewById(R.id.icon);
+        TextView extratxt = rowView.findViewById(R.id.sted);
 
 String image = getItem(position).getImage();
 image = image.replace("\\", "/");
@@ -59,5 +59,5 @@ image = image.replace("\\", "/");
 
         return rowView;
 
-    };
+    }
 }

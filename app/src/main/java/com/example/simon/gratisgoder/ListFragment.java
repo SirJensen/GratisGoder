@@ -49,7 +49,7 @@ public class ListFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_list, container, false);
 
-        listView = (ListView) rootView.findViewById(R.id.list);
+        listView = rootView.findViewById(R.id.list);
 
         nordjyl = new ArrayList<>();
         sydSj = new ArrayList<>();

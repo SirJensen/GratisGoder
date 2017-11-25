@@ -33,7 +33,9 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDeOq_7j5Y-R2s8YTtBN-SKhMrAraNGL3Y" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <activity
             android:name=".CreateExpActivity"
             android:label="Tilføj Oplevelse">
@@ -69,6 +71,8 @@
             android:name="io.fabric.ApiKey"
             android:value="e155ba467a6121a9468ba2914ac317d21a9a3c36"
             />
+
+
 
 
     </application>

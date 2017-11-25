@@ -71,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText Email = (EditText) findViewById(R.id.email);
-        final EditText Password = (EditText) findViewById(R.id.password);
-        final Button SignInButton = (Button) findViewById(R.id.no_account_sing_in_button);
+        final EditText Email = findViewById(R.id.email);
+        final EditText Password = findViewById(R.id.password);
+        final Button SignInButton = findViewById(R.id.no_account_sing_in_button);
 
         // Set up the login form.
 

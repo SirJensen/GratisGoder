@@ -1,51 +1,104 @@
 package com.example.simon.gratisgoder;
 
-
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class CreateExpActivity extends AppCompatActivity {
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
+public class CreateExpActivity extends AppCompatActivity implements PlaceSelectionListener {
+
+    private static final String LOG_TAG = "PlaceSelectionListener";
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+    private TextView locationTextView;
+    private TextView attributionsTextView;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createexp);
 
-    }
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i(LOG_TAG, "Place: " + place.getName());
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position) {
-                case 0:
-                    com.example.simon.gratisgoder.MapsFragment tab1 = new com.example.simon.gratisgoder.MapsFragment();
-                    return tab1;
-                case 1:
-                    ListFragment fragment = new ListFragment();
-                    Log.i("JJJ", "Laver jeg new");
-                    ListFragment tab2 = fragment;
-                    return tab2;
-                default:
-                    return null;
+                String placeDetailsStr = place.getName() + "\n"
+                        + place.getId() + "\n"
+                        + place.getLatLng().toString() + "\n"
+                        + place.getAddress() + "\n"
+                        + place.getAttributions();
+                locationTextView.setText(placeDetailsStr);
             }
-        }
 
-        @Override
-        public int getCount() {
-            return 0;
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(LOG_TAG, "An error occurred: " + status);
+            }
+        });
+
+
+/*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_createexp);
+
+        locationTextView = findViewById(R.id.txt_location);
+        attributionsTextView = findViewById(R.id.txt_attributions);
+
+        // Method #1
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+        autocompleteFragment.setHint("Search a Location");
+        autocompleteFragment.setBoundsBias(BOUNDS_MOUNTAIN_VIEW);
+
+    }
+
+    @SuppressLint("StringFormatMatches")
+    @Override
+    public void onPlaceSelected(Place place) {
+        Log.i(LOG_TAG, "Place Selected: " + place.getName());
+        locationTextView.setText(getString(R.string.formatted_place_data, place
+                .getName(), place.getAddress(), place.getPhoneNumber(), place
+                .getWebsiteUri(), place.getRating(), place.getId()));
+        if (!TextUtils.isEmpty(place.getAttributions())){
+            attributionsTextView.setText(Html.fromHtml(place.getAttributions().toString()));
         }
     }
 
-}
+    @Override
+    public void onError(Status status) {
+        Log.e(LOG_TAG, "onError: Status = " + status.toString());
+        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(),
+                Toast.LENGTH_SHORT).show();
+    }*/
+    }
 
+    @Override
+    public void onPlaceSelected(Place place) {
+
+    }
+
+    @Override
+    public void onError(Status status) {
+
+    }
+}

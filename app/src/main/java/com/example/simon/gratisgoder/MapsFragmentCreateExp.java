@@ -1,0 +1,138 @@
+package com.example.simon.gratisgoder;
+
+        import android.content.Context;
+        import android.content.Intent;
+        import android.location.Address;
+        import android.location.Geocoder;
+        import android.os.Bundle;
+        import android.support.v4.app.Fragment;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+
+        import com.example.simon.gratisgoder.API.MInterface;
+        import com.example.simon.gratisgoder.API.Service;
+        import com.example.simon.gratisgoder.DataFromDB.Articles;
+        import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
+        import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
+        import com.example.simon.gratisgoder.ListViewActivity;
+        import com.example.simon.gratisgoder.R;
+        import com.google.android.gms.maps.CameraUpdateFactory;
+        import com.google.android.gms.maps.GoogleMap;
+        import com.google.android.gms.maps.OnMapReadyCallback;
+        import com.google.android.gms.maps.SupportMapFragment;
+        import com.google.android.gms.maps.model.LatLng;
+        import com.google.android.gms.maps.model.Marker;
+        import com.google.android.gms.maps.model.MarkerOptions;
+
+        import java.io.IOException;
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.Map;
+
+        import retrofit2.Call;
+        import retrofit2.Callback;
+        import retrofit2.Response;
+
+/**
+ * Created by Tobias on 17-11-2017.
+ */
+
+public class MapsFragmentCreateExp extends Fragment implements OnMapReadyCallback {
+
+
+    private GoogleMap mMap;
+    MInterface api;
+    Call<Articles> call;
+    Articles oplevelser = new Articles();
+    List<Oplevelser> adresser ;
+    private Map<Marker, Oplevelser> markersMap = new HashMap<Marker, Oplevelser>();
+
+
+
+    SupportMapFragment mapFragment;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        final View rootView = inflater.inflate(R.layout.fragment_mapscreateexp, container, false);
+
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        return rootView;
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        LatLng sydney = new LatLng(-34, 151);
+
+
+
+        api = Service.createService(MInterface.class);
+
+        call = api.getOplevelser();
+
+        call.enqueue(new Callback<Articles>() {
+            @Override
+            public void onResponse(Call<Articles> call, Response<Articles> response) {
+                if(response.isSuccessful()) {
+                    oplevelser = response.body();
+                    adresser = oplevelser.getOplevelser();
+
+                    for (int i = 0; i< 5;i++){
+                        LatLng address = getLocationFromAddress(adresser.get(i).getAdresse()) ;
+                        if(address!=null) {
+                            // mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));
+
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));
+                            markersMap.put(marker, adresser.get(i));
+
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Articles> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+
+    public LatLng getLocationFromAddress( String strAddress)
+    {
+        Geocoder coder= new Geocoder(getContext());
+
+
+        Geocoder geoCoder = new Geocoder(getContext());
+        LatLng address = null ;
+        try {
+            List<Address> addresses =
+                    geoCoder.getFromLocationName(strAddress, 1);
+            if (addresses.size() >  0) {
+                double latitude = addresses.get(0).getLatitude();
+                double longtitude = addresses.get(0).getLongitude();
+                address = new LatLng(latitude,longtitude);
+            }
+
+        } catch (IOException e) { // TODO Auto-generated catch block
+            e.printStackTrace(); }
+        return address;
+
+    }
+
+
+}
+
+

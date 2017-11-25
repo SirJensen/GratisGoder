@@ -57,7 +57,7 @@ public class CustomDialogClass extends Dialog {
         vestJyl = (CheckBox) findViewById(R.id.vestjyl);
         storKbh = (CheckBox) findViewById(R.id.kbh);
         midtJyl = (CheckBox) findViewById(R.id.midtjyl);
-        CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl};
+        final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl};
         sog = (Button) findViewById(R.id.sog);
         sog.setOnClickListener(new View.OnClickListener() {
             @Override

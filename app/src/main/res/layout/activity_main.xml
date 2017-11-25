@@ -9,9 +9,10 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="202dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@drawable/gg_logo" />
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:src="@drawable/gg_starttext" />
     </LinearLayout>
 
 

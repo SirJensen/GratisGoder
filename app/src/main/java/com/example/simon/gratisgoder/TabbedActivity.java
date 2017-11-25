@@ -1,5 +1,6 @@
 package com.example.simon.gratisgoder;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
@@ -86,6 +88,17 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View headerLayout = navigationView.getHeaderView(0);
+        LinearLayout login = headerLayout.findViewById(R.id.loginlayout);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent login = new Intent(TabbedActivity.this, LoginActivity.class);
+                TabbedActivity.this.startActivity(login);
+            }
+        });
     }
     @Override
     public void onBackPressed() {
@@ -96,6 +109,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,7 +174,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    com.example.simon.gratisgoder.MapsFragment tab1 = new  com.example.simon.gratisgoder.MapsFragment();
+                    com.example.simon.gratisgoder.MapsFragmentCreateExp tab1 = new  com.example.simon.gratisgoder.MapsFragmentCreateExp();
                     return tab1;
                 case 1:
                     ListFragment fragment = new ListFragment();
@@ -183,21 +197,20 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-/*
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.createExp) {
+            Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
+            TabbedActivity.this.startActivity(createExp);
+        } else if (id == R.id.visited) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.myCreatedExp) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.settings) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.contact) {
 
         }
-*/
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

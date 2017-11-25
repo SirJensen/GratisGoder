@@ -32,7 +32,8 @@
                 android:layout_gravity="end"
                 android:adjustViewBounds="true"
                 android:src="@drawable/filtericon"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                />
 
         </android.support.v7.widget.Toolbar>
 

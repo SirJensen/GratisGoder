@@ -14,15 +14,10 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 public class CreateExpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "PlaceSelectionListener";
-   /* private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
-            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
-*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +33,13 @@ public class CreateExpActivity extends AppCompatActivity {
                 // TODO: Get info about the selected place.
                 Log.i(LOG_TAG, "Place: " + place.getName());
 
-                String placeDetailsStr = place.getName() //"\n"
-                        //+ place.getId() + "\n"
-                        + place.getLatLng().toString()
-                        + place.getAddress();
-                        //+ place.getAttributions();
+                String placeDetailsStr = place.getName() + "\n"
+                        + place.getId() + "\n"
+                        + place.getLatLng().toString()+ "\n"
+                        + place.getAddress()+ "\n"
+                        + place.getAttributions() + "\n"
+                        + place.getPhoneNumber() + "\n"
+                        + place.getWebsiteUri();
                 textView.setText(placeDetailsStr);
             }
 

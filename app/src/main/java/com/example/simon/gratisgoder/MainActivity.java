@@ -11,7 +11,11 @@ import android.os.Handler;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -30,6 +34,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         askPermissions();
 
+        View decorView = getWindow().getDecorView();
+// Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

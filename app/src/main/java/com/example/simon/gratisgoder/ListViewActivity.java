@@ -10,10 +10,15 @@ import android.graphics.drawable.LayerDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +71,7 @@ public class ListViewActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_scrolling);
+        setupWindowAnimations();
 
         Bundle extras = getIntent().getExtras();
          titel = extras.getString("Titel");
@@ -194,6 +200,11 @@ public class ListViewActivity extends AppCompatActivity {
     }
 
 
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.slide);
+        getWindow().setExitTransition(slide);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
@@ -224,5 +235,6 @@ public class ListViewActivity extends AppCompatActivity {
         return "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longtitude + "&zoom=15&size=600x300&maptype=roadmap&markers=color:red%7Clabel:C%7C"+ latitude + "," + longtitude +"&key=AIzaSyAki1uAFT0sfDhm4UvexbkEXtsLgKjElFs";
 
     }
+
 }
 

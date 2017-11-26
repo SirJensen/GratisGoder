@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.activity_list, container, false);
+
 
         listView = rootView.findViewById(R.id.list);
 
@@ -205,6 +208,7 @@ List<Oplevelser> filterList = null;
         }
     return filterList ;
     }
+
 
 }
 

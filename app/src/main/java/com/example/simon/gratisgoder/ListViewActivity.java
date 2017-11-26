@@ -201,8 +201,7 @@ public class ListViewActivity extends AppCompatActivity {
 
 
     private void setupWindowAnimations() {
-        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.slide);
-        getWindow().setExitTransition(slide);
+        overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
     }
 
     @Override

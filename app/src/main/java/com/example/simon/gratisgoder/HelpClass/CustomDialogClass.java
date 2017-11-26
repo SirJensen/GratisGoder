@@ -44,6 +44,8 @@ public class CustomDialogClass extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
 
+
+
         nordjyl = (CheckBox) findViewById(R.id.nordjyl);
         sydSj  = (CheckBox) findViewById(R.id.sydsj);
         born = (CheckBox) findViewById(R.id.born);

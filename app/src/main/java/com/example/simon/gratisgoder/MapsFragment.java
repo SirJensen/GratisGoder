@@ -71,6 +71,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+
         Oplevelser dataFromMarker = markersMap.get(marker);
         Bundle bundle = new Bundle();
 
@@ -128,6 +129,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
             }
         });
+
         mMap.setOnMarkerClickListener(this);
 
     }

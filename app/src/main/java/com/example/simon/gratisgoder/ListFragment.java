@@ -130,12 +130,20 @@ public class ListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String titel = oplevelser.getOplevelser().get(i).getTitel();
-                String sted = oplevelser.getOplevelser().get(i).getSted();
-                String adresse = oplevelser.getOplevelser().get(i).getAdresse();
-                String img = oplevelser.getOplevelser().get(i).getImage();
+
+                String titel = myAdapter.getItem(i).getTitel();
+                String sted = myAdapter.getItem(i).getSted();
+                String adresse = myAdapter.getItem(i).getAdresse();
+                String img = myAdapter.getItem(i).getImage();
                 img = img.replace("\\", "/");
-                String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
+                String beskrivelse = myAdapter.getItem(i).getBeskrivelse();
+
+                //String titel = oplevelser.getOplevelser().get(i).getTitel();
+                //String sted = oplevelser.getOplevelser().get(i).getSted();
+                //String adresse = oplevelser.getOplevelser().get(i).getAdresse();
+                //String img = oplevelser.getOplevelser().get(i).getImage();
+                //img = img.replace("\\", "/");
+                //String beskrivelse = oplevelser.getOplevelser().get(i).getBeskrivelse();
 
                 Bundle bundle = new Bundle();
 

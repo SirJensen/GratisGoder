@@ -41,7 +41,6 @@
 
 <LinearLayout
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -95,13 +94,15 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_gravity="center"
-           android:text="Bedøm" />
+           android:text="Bedøm"
+           android:layout_marginBottom="2dp"/>
 
 </LinearLayout>
        <ImageView
            android:id="@+id/googleMap"
            android:layout_width="match_parent"
            android:layout_height="150dp"
+           android:layout_marginBottom="10dp"
            />
 
    </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.simon.gratisgoder;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,7 @@ public class ListViewActivity extends AppCompatActivity {
     MInterface api;
     List<Rating> rating ;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
          titel = extras.getString("Titel");
-        String sted = extras.getString("Sted");
+       String sted = extras.getString("Sted");
         adresse = extras.getString("Adresse");
         String img = extras.getString("Image");
         String beskrivelse = extras.getString("Beskrivelse");
@@ -179,6 +182,15 @@ public class ListViewActivity extends AppCompatActivity {
     String urlToImage = getImageFromAddress(adresse);
 
         Picasso.with(this).load(urlToImage).fit().centerCrop().into(map);
+
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String map = "http://maps.google.co.in/maps?q=" + adresse;
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                startActivity(i);
+            }
+        });
     }
 
 
@@ -209,7 +221,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         } catch (IOException e) { // TODO Auto-generated catch block
             e.printStackTrace(); }
-        return "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longtitude + "&zoom=13&size=400x400&sensor=false";
+        return "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longtitude + "&zoom=15&size=600x300&maptype=roadmap&markers=color:red%7Clabel:C%7C"+ latitude + "," + longtitude +"&key=AIzaSyAki1uAFT0sfDhm4UvexbkEXtsLgKjElFs";
 
     }
 }

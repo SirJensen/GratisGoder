@@ -17,15 +17,12 @@ import android.widget.Toast;
 
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
-import com.example.simon.gratisgoder.DataFromDB.Articles;
-import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
+
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,18 +39,13 @@ public class CreateExpActivity extends AppCompatActivity {
     EditText headline;
     EditText description;
 
-    EditText number;
-    EditText website;
-    EditText email;
     Button createButton;
     String adresse = "";
     String sted = "";
     int i = -1;
 
     MInterface api;
-    Call<Articles> call;
-    Articles oplevelser = new Articles();
-    public static List<Oplevelser> alle;
+    Call<String> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +63,7 @@ public class CreateExpActivity extends AppCompatActivity {
 
                 Log.i(LOG_TAG, "Place: " + place.getName());
                 adresse = place.getAddress().toString();
-                insertValues(number, place.getPhoneNumber().toString());
-                insertValues(website, place.getWebsiteUri().toString());
                 insertValues(headline, place.getName().toString());
-
-                String placeDetailsStr = place.getName() + "\n"
-                        + place.getId() + "\n"
-                        + place.getLatLng().toString() + "\n"
-                        + place.getAddress() + "\n"
-                        + place.getAttributions() + "\n"
-                        + place.getPhoneNumber() + "\n"
-                        + place.getWebsiteUri();
-                textView.setText(placeDetailsStr);
 
             }
 
@@ -101,22 +82,18 @@ public class CreateExpActivity extends AppCompatActivity {
         headline = (EditText) findViewById(R.id.headline);
         description = (EditText) findViewById(R.id.description);
 
-        number = (EditText) findViewById(R.id.number);
-        website = (EditText) findViewById(R.id.website);
-        email = (EditText) findViewById(R.id.email);
-
-
 
         createButton = (Button) findViewById(R.id.button2);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    Boolean b4 = checkRadioButtons();
-                    Boolean b1 = checkValues((EditText) autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input), "Adresse*");
-                    Boolean b2 = checkValues(headline, "Overskrift*");
-                    Boolean b3 = checkValues(description, "Beskrivelse*");
-                    if(b1 && b2 && b3 && b4){
+                Boolean b4 = checkRadioButtons();
+                Boolean b1 = checkValues((EditText) autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input), "Adresse*");
+                Boolean b2 = checkValues(headline, "Overskrift*");
+                Boolean b3 = checkValues(description, "Beskrivelse*");
+
+                if (b1 && b2 && b3 && b4) {
                     Context context = getApplicationContext();
                     CharSequence text = "Hello toast!";
                     int duration = Toast.LENGTH_SHORT;
@@ -126,118 +103,109 @@ public class CreateExpActivity extends AppCompatActivity {
                     RadioButton radioButton = (RadioButton) findViewById(i);
                     sted = radioButton.getText().toString();
 
-
-                    final Oplevelser myObject = new Oplevelser(
+                    api = Service.createService(MInterface.class);
+                    call = api.setNewOP(
                             description.getText().toString(),
                             sted,
                             adresse,
-                            "",
+                            "test",
                             headline.getText().toString());
+                    /*call = api.setNewOP(
+                            "test",
+                            "test",
+                            "test",
+                            "test",
+                            "test");*/
 
-                        api = Service.createService(MInterface.class);
-
-                        call = api.getOplevelser();
-
-                        call.enqueue(new Callback<Articles>() {
-                            @Override
-                            public void onResponse(Call<Articles> call, Response<Articles> response) {
-                                if (response.isSuccessful()) {
-                                    oplevelser = response.body();
-                                    alle = oplevelser.getOplevelser();
-
-                                    
-                                    number.setText(String.valueOf(alle.size()));
-
-                                    //alle.add(myObject);
-
-                                    //call = api.setOp
-                                    //oplevelser.setOplevelser(alle);
-                                }
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Succes!",
+                                        Toast.LENGTH_LONG).show();
                             }
-                            @Override
-                            public void onFailure(Call<Articles> call, Throwable t) {
-                                toast();
+                            else{
+                                Toast.makeText(getApplicationContext(), "No Response",
+                                        Toast.LENGTH_LONG).show();
                             }
-                        });
 
+                        }
 
-                    //List<Oplevelser> oplevelser = articles.getOplevelser();
-                    //headline.setText(oplevelser.size());
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            toast();
+                        }
 
-                    //oplevelser.add(myObject);
-                   /*
-
-                    articles.setOplevelser(oplevelser);*/
+                    });
                 }
-                else{
-                        toast();
-                    }
             }
         });
-
     }
 
-    private RadioGroup.OnCheckedChangeListener listener3 = new RadioGroup.OnCheckedChangeListener() {
 
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId != -1) {
-                radioGroup4.setOnCheckedChangeListener(null);
-                radioGroup4.clearCheck();
-                radioGroup4.setOnCheckedChangeListener(listener4);
-                i = checkedId;
+        private RadioGroup.OnCheckedChangeListener listener3 = new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != -1) {
+                    radioGroup4.setOnCheckedChangeListener(null);
+                    radioGroup4.clearCheck();
+                    radioGroup4.setOnCheckedChangeListener(listener4);
+                    i = checkedId;
+                }
             }
-        }
-    };
+        };
 
-    private RadioGroup.OnCheckedChangeListener listener4 = new RadioGroup.OnCheckedChangeListener() {
 
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId != -1) {
-                radioGroup3.setOnCheckedChangeListener(null);
-                radioGroup3.clearCheck();
-                radioGroup3.setOnCheckedChangeListener(listener3);
-                i = checkedId;
+        private RadioGroup.OnCheckedChangeListener listener4 = new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != -1) {
+                    radioGroup3.setOnCheckedChangeListener(null);
+                    radioGroup3.clearCheck();
+                    radioGroup3.setOnCheckedChangeListener(listener3);
+                    i = checkedId;
+                }
             }
-        }
-    };
+        };
 
-    private boolean checkValues(EditText editText, String s){
-        if (editText.getText().toString().equals("") || editText.getText().toString().equals(s)){
 
-            editText.setBackgroundResource(R.drawable.edittext_outline);
-            return false;
-        }
-        else {
-            editText.setBackgroundResource(0);
-            return true;
-        }
-    }
-    private boolean checkRadioButtons(){
-        if(i == -1){
-            linearLayout.setBackgroundResource(R.drawable.edittext_outline);
-            return false;
-        }
-        else{
-            linearLayout.setBackgroundResource(0);
-            return true;
-        }
-    }
+            private boolean checkValues(EditText editText, String s) {
+                if (editText.getText().toString().equals("") || editText.getText().toString().equals(s)) {
 
-    private void insertValues(EditText editText, String s){
-        if (editText.getText().toString().equals("") || editText.getText().toString().equals(s)){
-            editText.setText(s);
-        }
-    }
+                    editText.setBackgroundResource(R.drawable.edittext_outline);
+                    return false;
+                } else {
+                    editText.setBackgroundResource(0);
+                    return true;
+                }
+            }
 
-    private void toast(){
-        Context context = getApplicationContext();
-        CharSequence text = "Udfyld Alle Felter Med *";
-        int duration = Toast.LENGTH_LONG;
+            private boolean checkRadioButtons() {
+                if (i == -1) {
+                    linearLayout.setBackgroundResource(R.drawable.edittext_outline);
+                    return false;
+                } else {
+                    linearLayout.setBackgroundResource(0);
+                    return true;
+                }
+            }
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+            private void insertValues(EditText editText, String s) {
+                if (editText.getText().toString().equals("") || editText.getText().toString().equals(s)) {
+                    editText.setText(s);
+                }
+            }
+
+            private void toast() {
+                Context context = getApplicationContext();
+                CharSequence text = "Udfyld Alle Felter Med *";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+
 
 }

@@ -15,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.simon.gratisgoder.API.MInterface;
+import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
 import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
 import com.google.android.gms.common.api.Status;
@@ -22,7 +24,13 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CreateExpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "PlaceSelectionListener";
@@ -42,8 +50,10 @@ public class CreateExpActivity extends AppCompatActivity {
     String sted = "";
     int i = -1;
 
-    boolean headlinebool = true;
-    char c = Character.MIN_VALUE;;
+    MInterface api;
+    Call<Articles> call;
+    Articles oplevelser = new Articles();
+    public static List<Oplevelser> alle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,15 +127,41 @@ public class CreateExpActivity extends AppCompatActivity {
                     sted = radioButton.getText().toString();
 
 
-                    Oplevelser myObject = new Oplevelser(
+                    final Oplevelser myObject = new Oplevelser(
                             description.getText().toString(),
                             sted,
                             adresse,
                             "",
                             headline.getText().toString());
 
-                    Articles articles = new Articles();
-                    List<Oplevelser> oplevelser = articles.getOplevelser();
+                        api = Service.createService(MInterface.class);
+
+                        call = api.getOplevelser();
+
+                        call.enqueue(new Callback<Articles>() {
+                            @Override
+                            public void onResponse(Call<Articles> call, Response<Articles> response) {
+                                if (response.isSuccessful()) {
+                                    oplevelser = response.body();
+                                    alle = oplevelser.getOplevelser();
+
+                                    
+                                    number.setText(String.valueOf(alle.size()));
+
+                                    //alle.add(myObject);
+
+                                    //call = api.setOp
+                                    //oplevelser.setOplevelser(alle);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Articles> call, Throwable t) {
+                                toast();
+                            }
+                        });
+
+
+                    //List<Oplevelser> oplevelser = articles.getOplevelser();
                     //headline.setText(oplevelser.size());
 
                     //oplevelser.add(myObject);

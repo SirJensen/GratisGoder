@@ -21,6 +21,14 @@ public class Oplevelser {
     @Expose
     private String titel;
 
+    public Oplevelser(String beskrivelse_, String sted_, String adresse_, String image_, String titel_){
+        beskrivelse = beskrivelse_;
+        sted = sted_;
+        adresse = adresse_;
+        image = image_;
+        titel = titel_;
+    }
+
     public String getBeskrivelse() {
         return beskrivelse;
     }
@@ -33,9 +41,7 @@ public class Oplevelser {
         return sted;
     }
 
-    public void setSted(String sted) {
-        this.sted = sted;
-    }
+    public void setSted(String sted) { this.sted = sted; }
 
     public String getAdresse() {
         return adresse;

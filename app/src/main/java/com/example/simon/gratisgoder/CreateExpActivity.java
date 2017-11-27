@@ -51,7 +51,7 @@ public class CreateExpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createexp);
-        final TextView textView = (TextView) findViewById(R.id.textView7);
+        //final TextView textView = (TextView) findViewById(R.id.textView7);
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setText("Adresse*");
@@ -104,12 +104,12 @@ public class CreateExpActivity extends AppCompatActivity {
                     sted = radioButton.getText().toString();
 
                     api = Service.createService(MInterface.class);
-                    call = api.setNewOP(
+                    call = api.setNewOP(""+
                             description.getText().toString(),
-                            sted,
-                            adresse,
+                            ""+sted,
+                            ""+adresse,
                             "test",
-                            headline.getText().toString());
+                            ""+headline.getText().toString());
                     /*call = api.setNewOP(
                             "test",
                             "test",

@@ -27,7 +27,7 @@ import retrofit2.http.POST;
     Call<Articles> getOplevelser();
 
     @FormUrlEncoded
-    @POST("/images/insertNewOP.php")
+    @POST("/images/InsertNewOP.php")
     Call<String> setNewOP(@Field("beskrivelse") String be, @Field("sted") String sted,@Field("adresse") String adr
             ,@Field("image") String img,@Field("titel") String titel);
 
@@ -37,8 +37,10 @@ import retrofit2.http.POST;
     @FormUrlEncoded
     @POST("/images/insert.php")
     Call<String> insertToAVG(@Field("titel") String first, @Field("rating") String last);
-    }
 
+
+
+}
 
 
 

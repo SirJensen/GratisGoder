@@ -26,7 +26,7 @@ public class CustomDialogClass extends Dialog {
 
     public Activity c;
     public Dialog d;
-    public CheckBox nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl;
+    public CheckBox nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj;
     Button sog;
     List<Oplevelser> h = new ArrayList<>();
 
@@ -55,7 +55,10 @@ public class CustomDialogClass extends Dialog {
         vestJyl = (CheckBox) findViewById(R.id.vestjyl);
         storKbh = (CheckBox) findViewById(R.id.kbh);
         midtJyl = (CheckBox) findViewById(R.id.midtjyl);
-        final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl};
+        sydJyl = (CheckBox) findViewById(R.id.sydjyl);
+        nordSj = (CheckBox) findViewById(R.id.nordsj);
+        vestSj = (CheckBox) findViewById(R.id.vestsj);
+        final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj};
         sog = (Button) findViewById(R.id.sog);
         sog.setOnClickListener(new View.OnClickListener() {
             @Override

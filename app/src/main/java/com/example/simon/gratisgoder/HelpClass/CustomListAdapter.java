@@ -50,8 +50,10 @@ image = image.replace("\\", "/");
         txtTitle.setText(getItem(position).getTitel());
 
 
+if(!image.isEmpty()){
+    Picasso.with(context).load( image).resize(100,100).into(imageView);
+}
 
-        Picasso.with(context).load( image).resize(100,100).into(imageView);
 
         extratxt.setText(getItem(position).getSted()); // fix bug
 

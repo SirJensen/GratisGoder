@@ -129,7 +129,7 @@ public class ListFragment extends Fragment {
 
                     }
 
-                    myAdapter = new CustomListAdapter(getActivity(), sydSj);
+                    myAdapter = new CustomListAdapter(getActivity(), alle);
                     listView.setAdapter(myAdapter);
 
                 }

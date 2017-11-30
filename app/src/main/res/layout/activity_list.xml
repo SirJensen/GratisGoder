@@ -11,6 +11,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_weight="1"
-        android:layout_marginBottom="80dp">
+        >
     </ListView>
 </android.support.design.widget.CoordinatorLayout>

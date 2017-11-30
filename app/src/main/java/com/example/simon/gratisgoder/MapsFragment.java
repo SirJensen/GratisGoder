@@ -21,11 +21,13 @@ import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Articles;
 import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -51,6 +53,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     Articles oplevelser = new Articles();
     List<Oplevelser> adresser ;
     private Map<Marker, Oplevelser> markersMap = new HashMap<Marker, Oplevelser>();
+    LatLngBounds.Builder builder ;
 
 
 
@@ -106,21 +109,28 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         call.enqueue(new Callback<Articles>() {
             @Override
             public void onResponse(Call<Articles> call, Response<Articles> response) {
+                 builder = new LatLngBounds.Builder();
                 if(response.isSuccessful()) {
                     oplevelser = response.body();
                     adresser = oplevelser.getOplevelser();
 
-                    for (int i = 0; i< 5;i++){
+                    for (int i = 0; i<5;i++){
                         LatLng address = getLocationFromAddress(adresser.get(i).getAdresse()) ;
                         if(address!=null) {
                            // mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));
 
                             Marker marker = mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));
                             markersMap.put(marker, adresser.get(i));
-
+                            builder.include(marker.getPosition());
+                            LatLngBounds bounds = builder.build();
+                            int padding = 250; // offset from edges of the map in pixels
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                            //mMap.moveCamera(cu);
+                            mMap.animateCamera(cu);
                         }
 
                     }
+
                 }
             }
 
@@ -130,6 +140,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             }
         });
 
+
+      ;
         mMap.setOnMarkerClickListener(this);
 
     }

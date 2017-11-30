@@ -39,7 +39,7 @@ public class ListFragment extends Fragment {
     Call<Articles> call;
     Articles oplevelser = new Articles();
     public static CustomListAdapter myAdapter;
-    public static List<Oplevelser> alle, nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl;
+    public static List<Oplevelser> alle, nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj;
 
     /**
      * The fragment argument representing the section number for this
@@ -63,6 +63,10 @@ public class ListFragment extends Fragment {
         vestJyl = new ArrayList<>();
         storKbh = new ArrayList<>();
         midtJyl = new ArrayList<>();
+        vestSj = new ArrayList<>();
+        nordSj = new ArrayList<>();
+        sydJyl = new ArrayList<>();
+
 
 
         api = Service.createService(MInterface.class);
@@ -111,6 +115,15 @@ public class ListFragment extends Fragment {
 
                         if (alle.getSted().contains("Midtjylland")) {
                             midtJyl.add(alle);
+                        }
+                        if (alle.getSted().contains("Nordsjælland")) {
+                            nordSj.add(alle);
+                        }
+                        if (alle.getSted().contains("Vestsjælland")) {
+                            vestSj.add(alle);
+                        }
+                        if (alle.getSted().contains("Sydjylland")) {
+                            sydJyl.add(alle);
                         }
 
 
@@ -202,6 +215,18 @@ List<Oplevelser> filterList = null;
             case "Midtjylland":
                 if(midtJyl != null)
                 filterList = midtJyl;
+                break;
+            case "Nordsjælland":
+                if(nordSj != null)
+                    filterList = nordSj;
+                break;
+            case "Vestsjælland":
+                if(vestSj != null)
+                    filterList = vestSj;
+                break;
+            case "Sydjylland":
+                if(sydJyl != null)
+                    filterList = sydJyl;
                 break;
             default:
                 break;

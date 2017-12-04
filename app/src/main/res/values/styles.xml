@@ -33,4 +33,9 @@
     </style>
 
 
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">#76FF03</item>
+
+    </style>
+
 </resources>

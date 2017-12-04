@@ -2,24 +2,19 @@ package com.example.simon.gratisgoder.HelpClass;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.RadioButton;
 
 import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
 import com.example.simon.gratisgoder.ListFragment;
 import com.example.simon.gratisgoder.R;
-import com.example.simon.gratisgoder.TabbedActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CustomDialogClass extends Dialog {
@@ -27,8 +22,9 @@ public class CustomDialogClass extends Dialog {
     public Activity c;
     public Dialog d;
     public CheckBox nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj;
-    Button sog;
-    List<Oplevelser> h = new ArrayList<>();
+    Button sog,clearAll;
+
+    List<Oplevelser> filterList = new ArrayList<>();
 
     public CustomDialogClass(Activity a) {
         super(a);
@@ -44,7 +40,9 @@ public class CustomDialogClass extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
 
+        SharedPreferences prefs;
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         nordjyl = (CheckBox) findViewById(R.id.nordjyl);
         sydSj  = (CheckBox) findViewById(R.id.sydsj);
@@ -58,7 +56,21 @@ public class CustomDialogClass extends Dialog {
         sydJyl = (CheckBox) findViewById(R.id.sydjyl);
         nordSj = (CheckBox) findViewById(R.id.nordsj);
         vestSj = (CheckBox) findViewById(R.id.vestsj);
+
         final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj};
+        String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
+        int setAllTrue = 0;
+        for(int i = 0 ; i< checkButtons.length;i++){
+
+        if(prefs.getInt(nameOfCheckBox[i], 0) == 1){
+            setAllTrue = 1;
+        checkButtons[i].setChecked(true);
+    }
+
+}
+if(setAllTrue == 0){
+    setCheckBox(true);
+}
         sog = (Button) findViewById(R.id.sog);
         sog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,13 +78,19 @@ public class CustomDialogClass extends Dialog {
 
                 for (int i = 0 ; i < checkButtons.length; i++){
                     if(checkButtons[i].isChecked()){
+                        prefs.edit().putInt(nameOfCheckBox[i],1).commit();
                         List<Oplevelser> addToAdapter = ListFragment.getListe(checkButtons[i].getText().toString());
                         if(addToAdapter!= null)
-                      h.addAll (addToAdapter);
+                      filterList.addAll (addToAdapter);
+
                     }
+                    else{
+                        prefs.edit().putInt(nameOfCheckBox[i],0).commit();
+                    }
+
                 }
                     ListFragment.myAdapter.clear();
-                        ListFragment.myAdapter.addAll(h);
+                        ListFragment.myAdapter.addAll(filterList);
                    ListFragment.myAdapter.notifyDataSetChanged();
                 dismiss();
 
@@ -80,7 +98,34 @@ public class CustomDialogClass extends Dialog {
 
         });
 
+        clearAll = (Button) findViewById(R.id.clearAll);
+        clearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCheckBox(false);
+
+            }
+        });
+
+
+
     }
+
+
+public void setCheckBox(boolean value){
+    nordjyl.setChecked(value);
+    sydSj.setChecked(value);
+    born.setChecked(value);
+    midtSj.setChecked(value);
+    fyn.setChecked(value);
+    ostJyl.setChecked(value);
+    vestJyl.setChecked(value);
+    storKbh.setChecked(value);
+    midtJyl.setChecked(value);
+    sydJyl.setChecked(value);
+    nordSj.setChecked(value);
+    vestSj.setChecked(value);
+}
 
 
 }

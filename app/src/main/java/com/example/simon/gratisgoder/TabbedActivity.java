@@ -1,7 +1,9 @@
 package com.example.simon.gratisgoder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -179,7 +181,6 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
                     return tab1;
                 case 1:
                     ListFragment fragment = new ListFragment();
-                    Log.i("JJJ","Laver jeg new");
                     ListFragment tab2 = fragment;
                     return tab2;
                 default:
@@ -216,5 +217,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }

@@ -1,18 +1,22 @@
 package com.example.simon.gratisgoder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.transition.Fade;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
@@ -38,9 +42,10 @@ public class ListFragment extends Fragment {
     MInterface api;
     Call<Articles> call;
     Articles oplevelser = new Articles();
+    TextView noData;
     public static CustomListAdapter myAdapter;
     public static List<Oplevelser> alle, nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj;
-
+    public List<Oplevelser> fromDialog = new ArrayList<>();
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -53,6 +58,7 @@ public class ListFragment extends Fragment {
 
 
         listView = rootView.findViewById(R.id.list);
+        noData = rootView.findViewById(R.id.empty);
 
         nordjyl = new ArrayList<>();
         sydSj = new ArrayList<>();
@@ -66,7 +72,12 @@ public class ListFragment extends Fragment {
         vestSj = new ArrayList<>();
         nordSj = new ArrayList<>();
         sydJyl = new ArrayList<>();
+        String [] nameOfCheckBoxToList = {"NordJylland", "Sydsjælland", "Bornholm","Midtsjælland", "Fyn", "Østjylland", "Vestjyllad", "København","Midtjylland","Nordsjælland","Vestsjælland","Sydjylland"};
+        String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
 
+        SharedPreferences prefs;
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
 
         api = Service.createService(MInterface.class);
@@ -129,8 +140,30 @@ public class ListFragment extends Fragment {
 
                     }
 
-                    myAdapter = new CustomListAdapter(getActivity(), alle);
+                    for(int i = 0; i< nameOfCheckBox.length;i++){
+
+                        if(prefs.getInt(nameOfCheckBox[i], 0) == 1){
+                            Log.i("hej du",nameOfCheckBoxToList[i]);
+                            List<Oplevelser> addToAdapter = getListe(nameOfCheckBoxToList[i]);
+                            Log.i("hvaderdu",""+addToAdapter);
+                            if(!addToAdapter.isEmpty()){
+                                Log.i("hej du",""+addToAdapter);
+                                fromDialog.addAll(addToAdapter);
+                            }
+
+                        }
+
+                    }
+
+                    if(!fromDialog.isEmpty()){
+                        myAdapter = new CustomListAdapter(getActivity(), fromDialog);
+                    }
+                    else{
+                        myAdapter = new CustomListAdapter(getActivity(), alle);
+                    }
+
                     listView.setAdapter(myAdapter);
+                    listView.setEmptyView(noData);
 
                 }
             }
@@ -233,6 +266,7 @@ List<Oplevelser> filterList = null;
         }
     return filterList ;
     }
+
 
 
 }

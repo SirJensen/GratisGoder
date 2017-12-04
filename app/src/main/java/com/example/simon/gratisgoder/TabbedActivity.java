@@ -206,9 +206,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
             TabbedActivity.this.startActivity(createExp);
         } else if (id == R.id.visited) {
-            if(getApplicationContext().getClass() == VistedActivity.class){
-                Toast.makeText(this, "Du er allerede på denne side", Toast.LENGTH_SHORT).show();
-            }
+
             Intent visted = new Intent(TabbedActivity.this, VistedActivity.class);
             TabbedActivity.this.startActivity(visted);
 
@@ -223,7 +221,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
 

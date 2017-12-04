@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -48,6 +49,8 @@ public class VistedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         db = new DBHandler(this);
         
         listView = findViewById(R.id.list);
@@ -139,7 +142,13 @@ public ArrayList<Oplevelser> getListAdapter(){
     }
     return oplevelser;
 }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
 
 }
 

@@ -69,10 +69,12 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         filter = findViewById(R.id.toolbar_logo);
+        filter.setVisibility(View.GONE);
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 CustomDialogClass cdd=new CustomDialogClass(TabbedActivity.this);
                 cdd.show();
 
@@ -80,9 +82,23 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         });
 
         TabLayout tabLayout = findViewById(R.id.tabs);
+        Log.i("hvad er du på",""+tabLayout.getSelectedTabPosition());
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                if ( tab == tabLayout.getTabAt(0)){
+                    filter.setVisibility(View.GONE);
+                }
+                else{
+                    filter.setVisibility(View.VISIBLE);
+                }
+
+            }});
+
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

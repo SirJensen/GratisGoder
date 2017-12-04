@@ -1,6 +1,8 @@
 package com.example.simon.gratisgoder;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -14,16 +16,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,11 +38,14 @@ import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
 import com.example.simon.gratisgoder.DataFromDB.Rating;
 import com.example.simon.gratisgoder.DataFromDB.RatingList;
+import com.example.simon.gratisgoder.HelpClass.DBHandler;
+import com.example.simon.gratisgoder.HelpClass.Result;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,10 +62,10 @@ public class ListViewActivity extends AppCompatActivity {
     AppBarLayout appBar;
     TextView titelTxt,stedTxt,adresseTxt,beskivTxt,textAfterBtn;
 
-    String titel;
+    String titel,adresse,sted,img,beskrivelse;
     RatingBar ratingBar,ratingBarUsers;
     Button rateBtn;
-    String adresse;
+    ImageButton saveBtn;
     ImageView map ;
     MInterface api;
     List<Rating> rating ;
@@ -75,20 +83,66 @@ public class ListViewActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
          titel = extras.getString("Titel");
-       String sted = extras.getString("Sted");
+        sted = extras.getString("Sted");
         adresse = extras.getString("Adresse");
-        String img = extras.getString("Image");
-        String beskrivelse = extras.getString("Beskrivelse");
+         img = extras.getString("Image");
+         beskrivelse = extras.getString("Beskrivelse");
+
+
 
         ratingBar =  findViewById(R.id.ratingBar);
 
 
         ratingBarUsers = findViewById(R.id.ratingBarAllUser);
-
+        DBHandler db ;
+        db = new DBHandler(getApplication());
+        ArrayList<Result> data = db.getContent();
 
         rateBtn =  findViewById(R.id.rbtn) ;
         textAfterBtn =  findViewById(R.id.textafterbtn) ;
         Toolbar toolbar =  findViewById(R.id.toolbar);
+
+        saveBtn =  findViewById(R.id.saveBtn);
+        for(int i = 0 ; i< data.size();i++){
+            if(data.get(i).getTitel().equals(titel)){
+                saveBtn.setImageResource(R.drawable.check);
+
+                saveBtn.setEnabled(false);
+            }
+        }
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(new ContextThemeWrapper(ListViewActivity.this, R.style.myDialog));
+                builder1.setMessage("Vil du gemme denne oplevelse");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Ja",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                DBHandler database = new DBHandler(getApplicationContext());
+                                database.addTestResult(titel,sted,adresse,img,beskrivelse);
+                                saveBtn.setImageResource(R.drawable.check);
+                                saveBtn.setEnabled(false);
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Nej",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        });
 
         appBar = findViewById(R.id.app_bar);
 
@@ -122,7 +176,6 @@ public class ListViewActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     rating = response.body().getRating();
                     for(int i=0; i< rating.size();i++){
-                        Log.i("hvad er titel",rating.get(i).getTitel());
                         if(rating.get(i).getTitel().equals(titel)){
                             ratingBarUsers.setRating(Float.parseFloat(rating.get(i).getRating()));
                         }
@@ -163,6 +216,16 @@ public class ListViewActivity extends AppCompatActivity {
       rateBtn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
+
+             // SQLiteDatabase mydatabase = openOrCreateDatabase("Visited",MODE_PRIVATE,null);
+
+              //mydatabase.execSQL("CREATE TABLE IF NOT EXISTS MyVisitedExp(Beskrivelse varchar(1000),Sted varchar(225),adresse varchar(225),image varchar(225), titel varchar(225));");
+
+//              mydatabase.execSQL("INSERT INTO MyVisitedExp VALUES(sted+'TESTBESKRIVELS','TESTSTED','TESTVEJ','TÅESTIMg','testti');");
+
+
+
+
               api = Service.createService(MInterface.class);
               Call<String> call ;
 

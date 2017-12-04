@@ -13,7 +13,7 @@
             android:id="@+id/visited"
 
             android:icon="@drawable/googleg_standard_color_18"
-            android:title="Oplevelser Besøgt Af Mig" />
+            android:title="Gemte Oplevelser" />
         <item
             android:id="@+id/myCreatedExp"
             android:icon="@drawable/googleg_standard_color_18"

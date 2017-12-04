@@ -6,6 +6,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
 
@@ -204,6 +206,12 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
             TabbedActivity.this.startActivity(createExp);
         } else if (id == R.id.visited) {
+            if(getApplicationContext().getClass() == VistedActivity.class){
+                Toast.makeText(this, "Du er allerede på denne side", Toast.LENGTH_SHORT).show();
+            }
+            Intent visted = new Intent(TabbedActivity.this, VistedActivity.class);
+            TabbedActivity.this.startActivity(visted);
+
 
         } else if (id == R.id.myCreatedExp) {
 

@@ -147,6 +147,8 @@ public class ListViewActivity extends AppCompatActivity {
         appBar = findViewById(R.id.app_bar);
 
         map =  findViewById(R.id.googleMap);
+if(!img.isEmpty()){
+
 
 
         Picasso.with(this).load(img).into(new Target() {
@@ -165,7 +167,7 @@ public class ListViewActivity extends AppCompatActivity {
 
             }
         });
-
+}
         api = Service.createService(MInterface.class);
         Call<RatingList> call ;
         call = api.getRating();

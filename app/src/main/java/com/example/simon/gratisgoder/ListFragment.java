@@ -93,6 +93,7 @@ public class ListFragment extends Fragment {
                     //myAdapter =  new CustomListAdapter(getActivity(),oplevelser.getOplevelser());
                     //listView.setAdapter(myAdapter);
                     for (Oplevelser alle : alle) {
+                        Log.i("Hvad kommer ind",alle.getSted().toString());
                         if (alle.getSted().contains("Nordjylland")) {
                             nordjyl.add(alle);
                         }
@@ -120,17 +121,17 @@ public class ListFragment extends Fragment {
                             vestJyl.add(alle);
                         }
 
-                        if (alle.getSted().contains("Storkøbenhavn")) {
+                        if (alle.getSted().contains("Storkøbenhavn") || alle.getSted().contains("StorkÃ¸benhavn")) {
                             storKbh.add(alle);
                         }
 
                         if (alle.getSted().contains("Midtjylland")) {
                             midtJyl.add(alle);
                         }
-                        if (alle.getSted().contains("Nordsjælland")) {
+                        if (alle.getSted().contains("Nordsjælland") || alle.getSted().contains("NordsjÃ\u0083Â¦lland")) {
                             nordSj.add(alle);
                         }
-                        if (alle.getSted().contains("Vestsjælland")) {
+                        if (alle.getSted().contains("Vestsjælland") || alle.getSted().contains("VestsjÃ¦lland")) {
                             vestSj.add(alle);
                         }
                         if (alle.getSted().contains("Sydjylland")) {

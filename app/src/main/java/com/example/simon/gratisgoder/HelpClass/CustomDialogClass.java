@@ -40,7 +40,7 @@ public class CustomDialogClass extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
 
-        SharedPreferences prefs;
+        final SharedPreferences prefs;
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -58,7 +58,7 @@ public class CustomDialogClass extends Dialog {
         vestSj = (CheckBox) findViewById(R.id.vestsj);
 
         final CheckBox [] checkButtons = {nordjyl, sydSj, born, midtSj, fyn, ostJyl, vestJyl, storKbh, midtJyl,sydJyl,nordSj,vestSj};
-        String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
+        final String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
         int setAllTrue = 0;
         for(int i = 0 ; i< checkButtons.length;i++){
 

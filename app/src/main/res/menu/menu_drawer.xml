@@ -5,11 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/createExp"
-
-            android:icon="@drawable/googleg_standard_color_18"
-            android:title="Tilføj Oplevelse" />
-        <item
             android:id="@+id/visited"
 
             android:icon="@drawable/googleg_standard_color_18"
@@ -20,8 +15,7 @@
             android:title="Oplevelser Tilføjet Af Mig" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+    <group android:checkableBehavior="single">
             <item
                 android:id="@+id/settings"
                 android:icon="@drawable/googleg_standard_color_18"
@@ -30,7 +24,7 @@
                 android:id="@+id/contact"
                 android:icon="@drawable/googleg_standard_color_18"
                 android:title="Kontakt" />
+    </group>
         </menu>
-    </item>
 
-</menu>
+

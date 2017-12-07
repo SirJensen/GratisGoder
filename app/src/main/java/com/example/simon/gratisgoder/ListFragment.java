@@ -72,10 +72,10 @@ public class ListFragment extends Fragment {
         vestSj = new ArrayList<>();
         nordSj = new ArrayList<>();
         sydJyl = new ArrayList<>();
-        String [] nameOfCheckBoxToList = {"NordJylland", "Sydsjælland", "Bornholm","Midtsjælland", "Fyn", "Østjylland", "Vestjyllad", "København","Midtjylland","Nordsjælland","Vestsjælland","Sydjylland"};
-        String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
+        final String [] nameOfCheckBoxToList = {"NordJylland", "Sydsjælland", "Bornholm","Midtsjælland", "Fyn", "Østjylland", "Vestjyllad", "København","Midtjylland","Nordsjælland","Vestsjælland","Sydjylland"};
+        final String [] nameOfCheckBox = {"nordjyl", "sydSj", "born","midtSj", "fyn", "ostJyl", "vestJyl", "storKbh", "midtJyl","sydJyl","nordSj","vestSj"};
 
-        SharedPreferences prefs;
+        final SharedPreferences prefs;
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 

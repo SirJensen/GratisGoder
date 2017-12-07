@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -81,7 +82,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        final TabLayout tabLayout = findViewById(R.id.tabs);
 
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -118,6 +119,15 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
             public void onClick(View view) {
                 Intent login = new Intent(TabbedActivity.this, LoginActivity.class);
                 TabbedActivity.this.startActivity(login);
+            }
+        });
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
+                TabbedActivity.this.startActivity(createExp);
             }
         });
     }
@@ -218,10 +228,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.createExp) {
-            Intent createExp = new Intent(TabbedActivity.this, CreateExpActivity.class);
-            TabbedActivity.this.startActivity(createExp);
-        } else if (id == R.id.visited) {
+         if (id == R.id.visited) {
 
             Intent visted = new Intent(TabbedActivity.this, VistedActivity.class);
             TabbedActivity.this.startActivity(visted);

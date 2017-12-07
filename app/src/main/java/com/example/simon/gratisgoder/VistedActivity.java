@@ -66,7 +66,7 @@ public class VistedActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View view, int i, long l) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(new ContextThemeWrapper(VistedActivity.this, R.style.myDialog));
                 builder1.setMessage("Vil du slette "+oplevelser.get(i).getTitel());
-                String delete  = oplevelser.get(i).getTitel();
+                final String delete  = oplevelser.get(i).getTitel();
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(

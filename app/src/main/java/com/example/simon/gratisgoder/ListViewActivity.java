@@ -178,6 +178,7 @@ public class ListViewActivity extends AppCompatActivity {
                     for(int i=0; i< rating.size();i++){
                         if(rating.get(i).getTitel().equals(titel)){
                             ratingBarUsers.setRating(Float.parseFloat(rating.get(i).getRating()));
+
                         }
                     }
                 }

@@ -79,6 +79,7 @@
            android:layout_gravity="center"
            android:isIndicator="true"
            android:theme="@style/RatingBar"
+
            />
        <TextView
            android:layout_width="wrap_content"

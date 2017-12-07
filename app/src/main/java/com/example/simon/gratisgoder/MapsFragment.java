@@ -48,8 +48,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
 
     private GoogleMap mMap;
-    private GoogleMap googleMap;
-
     MInterface api;
     Call<Articles> call;
     Articles oplevelser = new Articles();
@@ -118,9 +116,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
                     for (int i = 0; i<5;i++){
                         LatLng address = getLocationFromAddress(adresser.get(i).getAdresse()) ;
-
-                        Marker ma = googleMap.addMarker(new MarkerOptions().position(address));
-
 
                         if(address!=null) {
                            // mMap.addMarker(new MarkerOptions().position(address).title(adresser.get(i).getTitel()));

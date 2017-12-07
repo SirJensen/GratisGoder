@@ -15,7 +15,7 @@
     <TextView android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FF0000"
+        android:background="@color/colorPrimaryDark"
         android:text="Ikke nogen oplevelser. Prøv en anden søgning"
         android:textAlignment="center"
         android:textColor="#ffffff"

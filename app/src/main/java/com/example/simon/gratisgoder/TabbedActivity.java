@@ -82,7 +82,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         });
 
         TabLayout tabLayout = findViewById(R.id.tabs);
-        Log.i("hvad er du på",""+tabLayout.getSelectedTabPosition());
+
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));

@@ -141,8 +141,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         }
     }
 
-
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tabbed, menu);
@@ -162,37 +161,14 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
 
-    public static class MapsFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.activity_maps, container, false);
-            return rootView;
-        }
-    }
-
-
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -230,9 +206,8 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
 
          if (id == R.id.visited) {
 
-            Intent visted = new Intent(TabbedActivity.this, VistedActivity.class);
-            TabbedActivity.this.startActivity(visted);
-
+            Intent visited = new Intent(TabbedActivity.this, VistedActivity.class);
+            TabbedActivity.this.startActivity(visited);
 
         } else if (id == R.id.myCreatedExp) {
 

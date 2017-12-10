@@ -1,13 +1,8 @@
 package com.example.simon.gratisgoder;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,19 +15,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.TransitionInflater;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.simon.gratisgoder.HelpClass.CustomDialogClass;
 
@@ -206,7 +193,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
 
          if (id == R.id.visited) {
 
-            Intent visited = new Intent(TabbedActivity.this, VistedActivity.class);
+            Intent visited = new Intent(TabbedActivity.this, VisitedActivity.class);
             TabbedActivity.this.startActivity(visited);
 
         } else if (id == R.id.myCreatedExp) {

@@ -1,44 +1,33 @@
 package com.example.simon.gratisgoder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.Fragment;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
 
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.simon.gratisgoder.DataFromDB.Oplevelser;
 import com.example.simon.gratisgoder.HelpClass.CustomListAdapter;
 import com.example.simon.gratisgoder.HelpClass.DBHandler;
 import com.example.simon.gratisgoder.HelpClass.Result;
-import com.example.simon.gratisgoder.R;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * Created by Tobias on 04-12-2017.
  */
 
-public class VistedActivity extends AppCompatActivity {
+public class VisitedActivity extends AppCompatActivity {
     TextView titelTxt,stedTxt,adresseTxt,beskivTxt ;
     DBHandler db;
     AppBarLayout appBar;
@@ -64,7 +53,7 @@ public class VistedActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View view, int i, long l) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(new ContextThemeWrapper(VistedActivity.this, R.style.myDialog));
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(new ContextThemeWrapper(VisitedActivity.this, R.style.myDialog));
                 builder1.setMessage("Vil du slette "+oplevelser.get(i).getTitel());
                 final String delete  = oplevelser.get(i).getTitel();
                 builder1.setCancelable(true);

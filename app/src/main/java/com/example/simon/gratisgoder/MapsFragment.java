@@ -1,11 +1,14 @@
 package com.example.simon.gratisgoder;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.simon.gratisgoder.API.MInterface;
 import com.example.simon.gratisgoder.API.Service;
@@ -44,7 +48,7 @@ import retrofit2.Response;
  * Created by Tobias on 17-11-2017.
  */
 
-public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
+public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener, LocationListener, OnMapReadyCallback {
 
 
     private GoogleMap mMap;
@@ -55,12 +59,24 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     private Map<Marker, Oplevelser> markersMap = new HashMap<Marker, Oplevelser>();
     LatLngBounds.Builder builder ;
 
+    private static final String MYTAG = "MYTAG";
+    private ProgressDialog myProgress;
 
+
+    // Request Code to ask the user for permission to view their current location (***).
+    // Value 8bit (value <256)
+    public static final int REQUEST_ID_ACCESS_COURSE_FINE_LOCATION = 100;
 
     SupportMapFragment mapFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        myProgress = new ProgressDialog(getActivity());
+        myProgress.setTitle("Loading");
+        myProgress.setMessage("Vent venligst...");
+        myProgress.setCancelable(true);
+        myProgress.show();
 
         final View rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 
@@ -70,7 +86,56 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         return rootView;
     }
 
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //
+        switch (requestCode) {
+            case REQUEST_ID_ACCESS_COURSE_FINE_LOCATION: {
+
+                // Note: If request is cancelled, the result arrays are empty.
+                // Permissions granted (read/write).
+                if (grantResults.length > 1
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(getActivity(),"Permission Granted", Toast.LENGTH_SHORT).show();
+
+                }
+                // Cancelled or denied.
+                else {
+
+                    Toast.makeText(getActivity(),"Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+
+    private void askPermissionsAndShowMyLocation() {
+
+        // With API> = 23, you have to ask the user for permission to view their location.
+        if (Build.VERSION.SDK_INT >= 23) {
+            int accessCoarsePermission
+                    = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
+            int accessFinePermission
+                    = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+
+            if (accessCoarsePermission != PackageManager.PERMISSION_GRANTED
+                    || accessFinePermission != PackageManager.PERMISSION_GRANTED) {
+                // The Permissions to ask user.
+                String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION};
+                // Show a dialog asking the user to allow the above permissions.
+                ActivityCompat.requestPermissions(getActivity(), permissions,
+                        REQUEST_ID_ACCESS_COURSE_FINE_LOCATION);
+
+                return;
+            }
+        }
+    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -87,9 +152,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         appInfo.putExtras(bundle);
         startActivity(appInfo);
 
-
-
-
         return false;
     }
 
@@ -98,13 +160,22 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         mMap = googleMap;
 
-        LatLng sydney = new LatLng(-34, 151);
-
-
-
         api = Service.createService(MInterface.class);
 
         call = api.getOplevelser();
+
+        askPermissionsAndShowMyLocation();
+
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+
+            @Override
+            public void onMapLoaded() {
+                // Map loaded. Dismiss this dialog, removing it from the screen.
+                myProgress.dismiss();
+            }
+        });
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         call.enqueue(new Callback<Articles>() {
             @Override
@@ -140,16 +211,11 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
             }
         });
-
-
-      ;
         mMap.setOnMarkerClickListener(this);
-
     }
 
     public LatLng getLocationFromAddress( String strAddress)
     {
-
 
        Geocoder geoCoder = new Geocoder(getContext());
 
@@ -170,6 +236,25 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     }
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }
 
 

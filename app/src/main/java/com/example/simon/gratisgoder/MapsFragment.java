@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -44,6 +47,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 /**
  * Created by Tobias on 17-11-2017.
  */
@@ -55,9 +60,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     MInterface api;
     Call<Articles> call;
     Articles oplevelser = new Articles();
-    List<Oplevelser> adresser ;
+    List<Oplevelser> adresser;
     private Map<Marker, Oplevelser> markersMap = new HashMap<Marker, Oplevelser>();
-    LatLngBounds.Builder builder ;
+    LatLngBounds.Builder builder;
 
     private static final String MYTAG = "MYTAG";
     private ProgressDialog myProgress;
@@ -68,6 +73,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public static final int REQUEST_ID_ACCESS_COURSE_FINE_LOCATION = 100;
 
     SupportMapFragment mapFragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,13 +106,15 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
-                    Toast.makeText(getActivity(),"Permission Granted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_SHORT).show();
+
+                    this.showMyLocation();
 
                 }
                 // Cancelled or denied.
                 else {
 
-                    Toast.makeText(getActivity(),"Permission Denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -143,11 +151,11 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         Oplevelser dataFromMarker = markersMap.get(marker);
         Bundle bundle = new Bundle();
 
-        bundle.putString("Titel",dataFromMarker.getTitel());
-        bundle.putString("Sted",dataFromMarker.getSted());
-        bundle.putString("Adresse",dataFromMarker.getAdresse());
-        bundle.putString("Image",dataFromMarker.getImage());
-        bundle.putString("Beskrivelse",dataFromMarker.getBeskrivelse());
+        bundle.putString("Titel", dataFromMarker.getTitel());
+        bundle.putString("Sted", dataFromMarker.getSted());
+        bundle.putString("Adresse", dataFromMarker.getAdresse());
+        bundle.putString("Image", dataFromMarker.getImage());
+        bundle.putString("Beskrivelse", dataFromMarker.getBeskrivelse());
         Intent appInfo = new Intent(getActivity(), ListViewActivity.class);
         appInfo.putExtras(bundle);
         startActivity(appInfo);
@@ -174,8 +182,20 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 myProgress.dismiss();
             }
         });
+
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
 
         call.enqueue(new Callback<Articles>() {
             @Override
@@ -233,6 +253,87 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             e.printStackTrace(); }
         return address;
 
+    }
+
+    private String getEnabledLocationProvider() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        // Criteria to find location provider.
+        Criteria criteria = new Criteria();
+
+        // Returns the name of the provider that best meets the given criteria.
+        // ==> "gps", "network",...
+        String bestProvider = locationManager.getBestProvider(criteria, true);
+
+        boolean enabled = locationManager.isProviderEnabled(bestProvider);
+
+        if (!enabled) {
+            Toast.makeText(getActivity(), "No location provider enabled!", Toast.LENGTH_LONG).show();
+            Log.i(MYTAG, "No location provider enabled!");
+            return null;
+        }
+        return bestProvider;
+    }
+
+    private void showMyLocation() {
+
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        String locationProvider = this.getEnabledLocationProvider();
+
+        if (locationProvider == null) {
+            return;
+        }
+
+        // Millisecond
+        final long MIN_TIME_BW_UPDATES = 1000;
+        // Met
+        final float MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;
+
+        Location myLocation = null;
+        try {
+            // This code need permissions (Asked above ***)
+            locationManager.requestLocationUpdates(
+                    locationProvider,
+                    MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, (android.location.LocationListener) this);
+            // Getting Location.
+            myLocation = locationManager
+                    .getLastKnownLocation(locationProvider);
+        }
+        // With Android API >= 23, need to catch SecurityException.
+        catch (SecurityException e) {
+            Toast.makeText(getActivity(), "Show My Location Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e(MYTAG, "Show My Location Error:" + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        if (myLocation != null) {
+
+            LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)             // Sets the center of the map to location user
+                    .zoom(15)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+            // Add Marker to Map
+            MarkerOptions option = new MarkerOptions();
+            option.title("My Location");
+            option.snippet("....");
+            option.position(latLng);
+            Marker currentMarker = mMap.addMarker(option);
+            currentMarker.showInfoWindow();
+        } else {
+            Toast.makeText(getActivity(), "Location not found!", Toast.LENGTH_LONG).show();
+            Log.i(MYTAG, "Location not found");
+        }
     }
 
 
